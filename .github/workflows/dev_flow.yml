@@ -41,7 +41,7 @@ jobs:
           path: .
       - name: test-front-end
         run: cd frontend && go test .  
-  publish:
+  push-staging:
     runs-on: production
     needs: [test]
     steps:
@@ -50,5 +50,7 @@ jobs:
         with: 
           name: code
           path: .
-      - name: test-front-end
-        run: docker-compose up --build -d  
+      - name: create-branch
+        uses: peterjgrainger/action-create-branch@v2.2.0  
+        with:
+          branch: 'release-notes'
