@@ -19,16 +19,16 @@ jobs:
           path: | 
             .
             !.git
-  build:
-    runs-on: production
-    # container: golang:latest ######
-    needs: [Clone-down]
-    steps:
-      - name: Download Repo
-        uses: actions/download-artifact@v3
-        with: 
-          name: code
-          path: .
+  # build:
+  #   runs-on: production
+  #   # container: golang:latest ######
+  #   needs: [Clone-down]
+  #   steps:
+  #     - name: Download Repo
+  #       uses: actions/download-artifact@v3
+  #       with: 
+  #         name: code
+  #         path: .
       - name: build-frontend
         run: cd frontend && go build .    
       - name: build-backend
