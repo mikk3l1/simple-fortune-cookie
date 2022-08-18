@@ -18,7 +18,7 @@ jobs:
             !.git
   publish:
     runs-on: staging
-    needs: [test]
+    needs: [clone-down]
     steps:
       - name: Download Repo
         uses: actions/download-artifact@v3
@@ -27,4 +27,4 @@ jobs:
           path: .
       - name: test-front-end
         run: docker-compose up --build -d  
-  
+    
