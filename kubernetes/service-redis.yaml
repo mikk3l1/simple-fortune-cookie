@@ -1,13 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  creationTimestamp: null
+  name:  service-redis
   labels:
     app: deployment-redis
-  name:  service-redis
 spec:
   ports: 
-  - port: 80
+  - port: 6379
     protocol: TCP
     targetPort: 6379
   selector:
