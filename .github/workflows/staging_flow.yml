@@ -1,0 +1,35 @@
+name: main-flow
+on:
+  push:
+    branches:
+      - ready/*
+jobs:
+  clone-down:
+    runs-on: production
+    steps:
+      - name: clone-down
+        uses: actions/checkout@v2
+      - name: Upload Repo
+        uses: actions/upload-artifact@v3
+        with: 
+          name: code
+          path: | 
+            .
+            !.git
+  publish:
+    runs-on: production
+    needs: [clone-down]
+    steps:
+      - name: Download Repo
+        uses: actions/download-artifact@v3
+        with: 
+          name: code
+          path: .
+      - name: test-front-end
+        run: docker-compose up --build -d  
+  pull-request:
+    runs-on: production
+    needs: [clone-down]
+    steps:
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
