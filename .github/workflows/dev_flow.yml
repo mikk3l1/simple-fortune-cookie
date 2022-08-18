@@ -5,7 +5,7 @@ on:
       - dev/*
 jobs:
   clone-down:
-    runs-on: production
+    runs-on: development
     steps:
       - name: clone-down
         uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
             .
             !.git
   build:
-    runs-on: production
+    runs-on: development
     # container: golang:latest ########
     needs: [Clone-down]
     steps:
@@ -31,7 +31,7 @@ jobs:
       - name: build-backend
         run: cd backend &&  go mod download github.com/gomodule/redigo && go build . 
   test:
-    runs-on: production
+    runs-on: development
     needs: [build]
     steps:
       - name: Download Repo
@@ -42,7 +42,7 @@ jobs:
       - name: test-front-end
         run: cd frontend && go test .  
   push-staging:
-    runs-on: production
+    runs-on: development
     needs: [test]
     steps:
       - name: Download Repo
@@ -56,6 +56,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: 'ready/${{github.ref_name}}'
+  deploy-development:
+    runs-on: development
+    needs: [test]
+    steps:
+      - name: Download Repo
+        uses: actions/download-artifact@v3
+        with: 
+          name: code
+          path: .
+      - name: test-front-end
+        run: docker-compose up --build -d  
+
+
       # - name: Push changes
       #   uses: ad-m/github-push-action@master
       #   with:
