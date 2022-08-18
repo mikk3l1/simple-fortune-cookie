@@ -1,4 +1,4 @@
-name: main-flow
+name: dev-flow
 on:
   push:
     branches:
