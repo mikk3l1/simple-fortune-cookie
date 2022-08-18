@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: clone-down
         uses: actions/checkout@v2
-        # with:
-        #   path: 03_cd
+         with:
+           ref: 03_cd
       - name: Upload Repo
         uses: actions/upload-artifact@v3
         with: 
