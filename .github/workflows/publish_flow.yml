@@ -2,7 +2,7 @@ name: main-flow
 on:
   push:
     branches:
-      - 03_cd_new
+      - main
 jobs:
   clone-down:
     runs-on: staging
