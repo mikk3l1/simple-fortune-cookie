@@ -56,17 +56,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: 'ready/${{github.ref_name}}'
-  deploy-development:
-    runs-on: development
-    needs: [test]
-    steps:
-      - name: Download Repo
-        uses: actions/download-artifact@v3
-        with: 
-          name: code
-          path: .
-      - name: test-front-end
-        run: docker-compose up --build -d  
 
 
       # - name: Push changes
