@@ -2,7 +2,7 @@ name: staging-flow
 on:
   push:
     branches:
-      - dev/*
+      - ready/*
 jobs:
   clone-down:
     runs-on: production

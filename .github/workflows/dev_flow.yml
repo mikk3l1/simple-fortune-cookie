@@ -61,3 +61,13 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: 'ready/${{github.ref_name}}'
+  pull-request:
+    runs-on: production
+    needs: [clone-down]
+    steps:
+    - name: Run the Action
+      uses: devops-infra/action-pull-request@v0.5.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        source_branch: ${{github.ref_name}}
+        target_branch: master
