@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-frontend
+  labels:
+    app: deployment-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployment-frontend
+  template:
+    metadata:
+      labels:
+        app: deployment-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: kinojr/frontenddevops
+        ports:
+        - containerPort: 8080
+        env:
+        - name: BACKEND_DNS
+          valueFrom:
+            configMapKeyRef:
+              name: backenddns
+              key: BACKEND_DNS
