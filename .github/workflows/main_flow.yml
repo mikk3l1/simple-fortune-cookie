@@ -1,6 +1,7 @@
 name: main-flow
 on:
-  pull_request:
+  #pull_request:
+  push:
     branches:
       - main
 jobs:
