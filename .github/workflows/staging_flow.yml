@@ -1,6 +1,6 @@
 name: staging-flow
 on:
-  create:
+  push:
     branches:
       - ready/*
 jobs:
