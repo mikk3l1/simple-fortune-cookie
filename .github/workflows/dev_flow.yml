@@ -1,11 +1,11 @@
-name: main-flow
+name: dev-flow
 on:
-  pull_request:
+  push:
     branches:
-      - main
+      - dev/*
 jobs:
   clone-down:
-    runs-on: staging
+    runs-on: development
     steps:
       - name: clone-down
         uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
             .
             !.git
   build:
-    runs-on: staging
+    runs-on: development
     needs: [Clone-down]
     steps:
       - name: Download Repo
@@ -30,7 +30,7 @@ jobs:
       - name: build-backend
         run: cd backend &&  go mod download github.com/gomodule/redigo && go build . 
   test:
-    runs-on: staging
+    runs-on: development
     needs: [build]
     steps:
       - name: Download Repo
@@ -40,3 +40,18 @@ jobs:
           path: .
       - name: test-front-end
         run: cd frontend && go test .  
+  push-staging:
+    runs-on: development
+    needs: [test]
+    steps:
+      - name: Download Repo
+        uses: actions/download-artifact@v3
+        with: 
+          name: code
+          path: .
+      - name: create-branch
+        uses: peterjgrainger/action-create-branch@v2.2.0  
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: 'ready/${{github.ref_name}}'
