@@ -1,8 +1,8 @@
 name: staging-flow
 on:
-  push:
+  create:
     branches:
-      - create/*
+      - ready/*
 jobs:
   clone-down:
     runs-on: production
