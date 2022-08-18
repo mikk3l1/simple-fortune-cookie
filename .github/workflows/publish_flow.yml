@@ -5,7 +5,7 @@ on:
       - main
 jobs:
   clone-down:
-    runs-on: staging
+    runs-on: production
     steps:
       - name: clone-down
         uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
             .
             !.git
   publish:
-    runs-on: staging
+    runs-on: production
     needs: [clone-down]
     steps:
       - name: Download Repo
