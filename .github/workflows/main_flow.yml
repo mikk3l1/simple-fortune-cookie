@@ -13,7 +13,7 @@ jobs:
       - name: clone-down
         uses: actions/checkout@v2
       - name: Upload Repo
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with: 
           name: code
           path: .
@@ -23,7 +23,7 @@ jobs:
     needs: [Clone-down]
     steps:
       - name: Download Repo
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           name: code
           path: .
@@ -36,7 +36,7 @@ jobs:
     needs: [build]
     steps:
       - name: Download Repo
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           name: code
           path: .
