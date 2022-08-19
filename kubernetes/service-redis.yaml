@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  service-redis
+  labels:
+    app: deployment-redis
+spec:
+  ports: 
+  - port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app: deployment-redis
+  type:  ClusterIP
