@@ -1,8 +1,9 @@
-name: main-flow
+name: publish-flow
 on:
   push:
     branches:
-      - main
+      - 03_container_registry    
+#      - main
 jobs:
   clone-down:
     runs-on: production
@@ -26,5 +27,18 @@ jobs:
           name: code
           path: .
       - name: test-front-end
-        run: docker-compose up --build -d  
+        run: docker-compose up --build -d
+  push-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ env.docker_username }}
+          password: ${{ env.docker_password }}
+      - name: push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: $docker_username/micronaut-app:1.0-${GIT_COMMIT::8}    
     
