@@ -43,7 +43,7 @@ jobs:
       - name: push
         uses: docker/build-push-action@v3
         with:
-          context: "{{defaultContext}}:frontend" 
+          context: ./frontend
           push: true
           tags: armandasrokas/simple-fortune-cookie-app
           #tags: $docker_username/simple-fortune-cookie-app:1.0-${GIT_COMMIT::8} 
