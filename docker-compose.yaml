@@ -24,4 +24,4 @@ services:
       - redis_data:/data
 
 volumes:
-  redis_data:redis:latest"
+  redis_data:
