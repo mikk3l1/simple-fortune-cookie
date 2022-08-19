@@ -4,6 +4,9 @@ on:
     branches:
       - 03_container_registry    
 #      - main
+env:
+  docker_username: ${{ secrets.DOCKER_USERNAME }}
+  docker_password: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
   clone-down:
     runs-on: production
@@ -30,6 +33,7 @@ jobs:
         run: docker-compose up --build -d
   push-docker-image:
     runs-on: ubuntu-latest
+    needs: [clone-down]
     steps:
       - name: login
         uses: docker/login-action@v1
