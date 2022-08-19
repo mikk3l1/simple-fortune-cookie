@@ -44,5 +44,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{env.docker_username}}/simple-fortune-cookie-app:1.0-${GIT_COMMIT::8}    
+          tags: '$docker_username/simple-fortune-cookie-app:1.0-${GIT_COMMIT::8}'    
     
