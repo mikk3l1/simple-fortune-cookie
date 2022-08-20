@@ -31,6 +31,7 @@ jobs:
           path: .
       - name: test-front-end
         run: docker-compose up --build -d
+        #run: docker-compose up --build -d
   push-docker-image:
     runs-on: production
     needs: [clone-down]
