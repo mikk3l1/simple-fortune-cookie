@@ -4,6 +4,7 @@ services:
     depends_on:
       - redis-container
     build: ./backend
+    image: ${docker_username}/simple-fortune-cookie-backend:latest
     environment:
       REDIS_DNS: redis-container
     restart: always
@@ -12,6 +13,7 @@ services:
     depends_on:
       - backend
     build: ./frontend
+    image: ${docker_username}/simple-fortune-cookie-frontend:latest
     ports:
       - 8080:8080
     environment:

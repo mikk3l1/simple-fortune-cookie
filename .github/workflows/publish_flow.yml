@@ -1,8 +1,11 @@
-name: main-flow
+name: publish-flow
 on:
   push:
     branches:
       - main
+env:
+  docker_username: ${{ secrets.DOCKER_USERNAME }}
+  docker_password: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
   clone-down:
     runs-on: production
@@ -16,15 +19,25 @@ jobs:
           path: | 
             .
             !.git
-  publish:
+  push-docker-hub:
     runs-on: production
     needs: [clone-down]
+    steps:    
+      - name: login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ env.docker_username }}
+          password: ${{ env.docker_password }}
+      - name: build
+        run: docker-compose build
+      - name: push
+        run: docker-compose push
+  publish:
+    runs-on: production
+    needs: [push-docker-hub]
     steps:
-      - name: Download Repo
-        uses: actions/download-artifact@v3
-        with: 
-          name: code
-          path: .
-      - name: test-front-end
-        run: docker-compose up --build -d  
-    
+      - name: pull-images
+        run: docker-compose pull 
+      - name: docker-compose-up
+        run: docker-compose up --no-build -d
+        
