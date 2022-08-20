@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: pull-images
         run: docker-compose pull 
-      - name: test-front-end
+      - name: docker-compose-up
         run: docker-compose up --no-build -d
         #run: docker-compose up --build -d
         

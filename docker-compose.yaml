@@ -4,7 +4,7 @@ services:
     depends_on:
       - redis-container
     build: ./backend
-    image: armandasrokas/backend:latest
+    image: ${docker_username}backend:latest
     environment:
       REDIS_DNS: redis-container
     restart: always
@@ -13,7 +13,7 @@ services:
     depends_on:
       - backend
     build: ./frontend
-    image: armandasrokas/frontend:latest
+    image: ${docker_username}frontend:latest
     ports:
       - 8080:8080
     environment:
