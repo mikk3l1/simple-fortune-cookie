@@ -20,14 +20,7 @@ jobs:
           path: | 
             .
             !.git
-  publish:
-    runs-on: production
-    needs: [clone-down]
-    steps:
-      - name: test-front-end
-        run: docker-compose up --build -d
-        #run: docker-compose up --build -d
-  push-docker-image:
+  push-docker-hub:
     runs-on: production
     needs: [clone-down]
     steps:    
@@ -40,4 +33,13 @@ jobs:
         run: docker-compose build
       - name: push
         run: docker-compose push
+  publish:
+    runs-on: production
+    needs: [push-docker-hub]
+    steps:
+      - name: pull-images
+        run: docker-compose pull 
+      - name: test-front-end
+        run: docker-compose up --no-build -d
+        #run: docker-compose up --build -d
         
