@@ -32,7 +32,7 @@ jobs:
       - name: test-front-end
         run: docker-compose up --build -d
   push-docker-image:
-    runs-on: ubuntu-latest
+    runs-on: production
     needs: [clone-down]
     steps:
       - name: login
@@ -40,11 +40,16 @@ jobs:
         with:
           username: ${{ env.docker_username }}
           password: ${{ env.docker_password }}
+      - name: build
+        run: docker-compose build
       - name: push
-        uses: docker/build-push-action@v3
-        with:
+        run: docker-compose push
+        
+        
+        # uses: docker/build-push-action@v3
+        # with:
           #context: ./frontend
-          push: true
-          tags: armandasrokas/simple-fortune-cookie-app
+          # push: true
+          # tags: armandasrokas/simple-fortune-cookie-app
           #tags: $docker_username/simple-fortune-cookie-app:1.0-${GIT_COMMIT::8} 
     
