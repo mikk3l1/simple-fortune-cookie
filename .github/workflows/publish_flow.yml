@@ -24,23 +24,13 @@ jobs:
     runs-on: production
     needs: [clone-down]
     steps:
-      - name: Download Repo
-        uses: actions/download-artifact@v3
-        with: 
-          name: code
-          path: .
       - name: test-front-end
         run: docker-compose up --build -d
         #run: docker-compose up --build -d
   push-docker-image:
     runs-on: production
     needs: [clone-down]
-    steps:
-      - name: Download Repo
-        uses: actions/download-artifact@v3
-        with: 
-          name: code
-          path: .      
+    steps:    
       - name: login
         uses: docker/login-action@v1
         with:
@@ -51,11 +41,3 @@ jobs:
       - name: push
         run: docker-compose push
         
-        
-        # uses: docker/build-push-action@v3
-        # with:
-          #context: ./frontend
-          # push: true
-          # tags: armandasrokas/simple-fortune-cookie-app
-          #tags: $docker_username/simple-fortune-cookie-app:1.0-${GIT_COMMIT::8} 
-    
