@@ -2,8 +2,7 @@ name: publish-flow
 on:
   push:
     branches:
-      - 03_container_registry    
-#      - main
+      - main
 env:
   docker_username: ${{ secrets.DOCKER_USERNAME }}
   docker_password: ${{ secrets.DOCKER_PASSWORD }}
@@ -41,5 +40,4 @@ jobs:
         run: docker-compose pull 
       - name: docker-compose-up
         run: docker-compose up --no-build -d
-        #run: docker-compose up --build -d
         
