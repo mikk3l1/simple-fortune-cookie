@@ -1,17 +1,14 @@
 name: staging-flow
 on:
-  #pull_request:
-  #  branches:
-  #    - main
-  push:
-    branches:
-      - dev/03_cd_add-publish-staging
+  pull_request:
+   branches:
+     - main
 env:
   docker_username: ${{ secrets.DOCKER_USERNAME }}
   docker_password: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
   clone-down:
-    runs-on: production
+    runs-on: staging
     steps:
       - name: clone-down
         uses: actions/checkout@v2
@@ -23,7 +20,7 @@ jobs:
             .
             !.git 
   build:
-    runs-on: production
+    runs-on: staging
     needs: [Clone-down]
     steps:
       - name: Download Repo
@@ -36,7 +33,7 @@ jobs:
       - name: build-backend
         run: cd backend &&  go mod download github.com/gomodule/redigo && go build . 
   test:
-    runs-on: production
+    runs-on: staging
     needs: [build]
     steps:
       - name: Download Repo
@@ -47,7 +44,7 @@ jobs:
       - name: test-front-end
         run: cd frontend && go test .  
   publish-staging:
-    runs-on: production
+    runs-on: staging
     needs: [test]
     steps:
       - name: Download Repo
