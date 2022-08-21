@@ -24,7 +24,7 @@ jobs:
             !.git 
   publish-staging:
     runs-on: production
-    needs: [test]
+    needs: [clone-down]
     steps:
       - name: Download Repo
         uses: actions/download-artifact@v3
