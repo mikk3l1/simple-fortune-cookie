@@ -1,4 +1,4 @@
-name: main-flow
+name: staging-flow
 on:
   #pull_request:
   #  branches:
