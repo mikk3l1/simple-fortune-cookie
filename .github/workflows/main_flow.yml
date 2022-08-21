@@ -1,11 +1,14 @@
 name: main-flow
 on:
-  pull_request:
+  #pull_request:
+  #  branches:
+  #    - main
+  push:
     branches:
-      - main
+      - dev/03_cd_add-publish-staging
 jobs:
   clone-down:
-    runs-on: staging
+    runs-on: production
     steps:
       - name: clone-down
         uses: actions/checkout@v2
@@ -17,7 +20,7 @@ jobs:
             .
             !.git
   build:
-    runs-on: staging
+    runs-on: production
     needs: [Clone-down]
     steps:
       - name: Download Repo
@@ -30,7 +33,7 @@ jobs:
       - name: build-backend
         run: cd backend &&  go mod download github.com/gomodule/redigo && go build . 
   test:
-    runs-on: staging
+    runs-on: production
     needs: [build]
     steps:
       - name: Download Repo
@@ -40,3 +43,14 @@ jobs:
           path: .
       - name: test-front-end
         run: cd frontend && go test .  
+  publish-staging:
+    runs-on: production
+    needs: [test]
+    steps:
+      - name: Download Repo
+        uses: actions/download-artifact@v3
+        with: 
+          name: code
+          path: .
+      - name: publish-staging
+        run: docker-compose up --build -d          
