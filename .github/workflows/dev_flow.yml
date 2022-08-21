@@ -60,6 +60,11 @@ jobs:
     runs-on: production
     needs: [clone-down]
     steps:
+    - name: Download Repo
+      uses: actions/download-artifact@v3
+      with: 
+        name: code
+        path: .
     - name: Run the Action
       uses: devops-infra/action-pull-request@v0.5.0
       with:
