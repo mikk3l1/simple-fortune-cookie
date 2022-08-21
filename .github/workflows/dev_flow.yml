@@ -3,7 +3,7 @@ on:
   push:
     branches:
       # - dev/*
-      - fix_03_cd
+      - dev/03_cd_pr
 jobs:
   clone-down:
     runs-on: production
