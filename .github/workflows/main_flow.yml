@@ -2,7 +2,7 @@ name: main-flow
 on:
   #pull_request:
   #  branches:
-  #    - main
+  ##    - main
   push:
     branches:
       - dev/03_cd_add-publish-staging
