@@ -1,8 +1,11 @@
 name: staging-flow
 on:
-  pull_request:
+  #pull_request:
+  #  branches:
+  #    - main
+  push:
     branches:
-      - main
+      - dev/03_cd_add-publish-staging
 env:
   docker_username: ${{ secrets.DOCKER_USERNAME }}
   docker_password: ${{ secrets.DOCKER_PASSWORD }}
