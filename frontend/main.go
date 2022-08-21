@@ -94,7 +94,7 @@ func main() {
             return
         }
 
-        fmt.Fprint(w, "Cookie added!!!TRYING!")
+        fmt.Fprint(w, "Cookie added!!!TRYING!AGAIN!")
 
         return
     })

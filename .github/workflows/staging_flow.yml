@@ -1,8 +1,11 @@
-name: main-flow
+name: staging-flow
 on:
   pull_request:
-    branches:
-      - main
+   branches:
+     - main
+env:
+  docker_username: ${{ secrets.DOCKER_USERNAME }}
+  docker_password: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
   clone-down:
     runs-on: staging
@@ -15,7 +18,7 @@ jobs:
           name: code
           path: | 
             .
-            !.git
+            !.git 
   build:
     runs-on: staging
     needs: [Clone-down]
@@ -40,3 +43,14 @@ jobs:
           path: .
       - name: test-front-end
         run: cd frontend && go test .  
+  publish-staging:
+    runs-on: staging
+    needs: [test]
+    steps:
+      - name: Download Repo
+        uses: actions/download-artifact@v3
+        with: 
+          name: code
+          path: .
+      - name: publish-staging
+        run: docker-compose up --build -d          
